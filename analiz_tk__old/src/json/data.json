@@ -1,0 +1,119 @@
+{
+  " ": {
+    "path": "D:/Programming/Python/Scripts/analitica/pattern.xlsx",
+    "path_pattern": "D:/Programming/Python/Scripts/analizz/pattern.xlsx",
+    "tk": {
+      "city": "",
+      "convert": "",
+      "minimum_1": "",
+      "minimum_2": "",
+      "objem": "",
+      "ves_100": "",
+      "ves_3000": "",
+      "row_app": 0,
+      "row_1": 0,
+      "row_2": 0,
+      "row_3": 0,
+      "row_4": 0,
+      "row_5": 0,
+      "row_6": 0,
+      "row_7": 0,
+      "check": false
+    },
+    "shb": {
+      "convert_as": "",
+      "minimum_1_as": "",
+      "minimum_2_as": "",
+      "objem_as": "",
+      "ves_100_as": "",
+      "ves_3000_as": ""
+    }
+  },
+  "GTD": {
+    "path": "D:/Programming/Python/Scripts/analizz/excel/viteka.xlsx",
+    "tk": {
+      "city": "A",
+      "convert": "D",
+      "minimum_1": "E",
+      "minimum_2": "F",
+      "objem": "O",
+      "ves_100": "P",
+      "ves_3000": "Q",
+      "row_app": 0,
+      "row_1": 0,
+      "row_2": 0,
+      "row_3": 0,
+      "row_4": 0,
+      "row_5": 0,
+      "row_6": 0,
+      "row_7": 0,
+      "check": true
+    },
+    "shb": {
+      "convert_as": "B",
+      "minimum_1_as": "C",
+      "minimum_2_as": "D",
+      "objem_as": "E",
+      "ves_100_as": "F",
+      "ves_3000_as": "G"
+    }
+  },
+  "Деловые линии": {
+    "path": "D:/Programming/Python/Scripts/analizz/excel/gtd.xlsx",
+    "tk": {
+      "city": "A",
+      "convert": "B",
+      "minimum_1": "F",
+      "minimum_2": "G",
+      "objem": "AA",
+      "ves_100": "T",
+      "ves_3000": "J",
+      "row_app": 1,
+      "row_1": 0,
+      "row_2": 0,
+      "row_3": 0,
+      "row_4": 0,
+      "row_5": 0,
+      "row_6": 0,
+      "row_7": 0,
+      "check": false
+    },
+    "shb": {
+      "convert_as": "B",
+      "minimum_1_as": "C",
+      "minimum_2_as": "D",
+      "objem_as": "E",
+      "ves_100_as": "F",
+      "ves_3000_as": "G"
+    }
+  },
+  "Энергия": {
+    "path": "D:/Programming/Python/Scripts/analizz/excel/energe.xlsx",
+    "tk": {
+      "city": "A",
+      "convert": "D",
+      "minimum_1": "E",
+      "minimum_2": "F",
+      "objem": "O",
+      "ves_100": "P",
+      "ves_3000": "Q",
+      "row_app": 2,
+      "row_1": 0,
+      "row_2": 0,
+      "row_3": 0,
+      "row_4": 0,
+      "row_5": 0,
+      "row_6": 0,
+      "row_7": 0,
+      "check": true
+    },
+    "shb": {
+      "convert_as": "B",
+      "minimum_1_as": "C",
+      "minimum_2_as": "D",
+      "objem_as": "E",
+      "ves_100_as": "F",
+      "ves_3000_as": "G"
+    }
+  }
+}

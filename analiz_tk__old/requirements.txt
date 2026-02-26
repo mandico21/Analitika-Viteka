@@ -1,0 +1,6 @@
+et-xmlfile==1.1.0
+fuzzywuzzy==0.18.0
+openpyxl==3.0.10
+PyQt5==5.15.6
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.10.1
