@@ -2,46 +2,39 @@
 Графический интерфейс приложения на PySide6.
 """
 import sys
-import os
 import logging
 from pathlib import Path
 from typing import Optional
-
-# На Windows без консоли sys.stdout/stderr = None — подавляем ошибки
-if sys.platform == 'win32' and getattr(sys, 'frozen', False):
-    if sys.stdout is None:
-        sys.stdout = open(os.devnull, 'w', encoding='utf-8')
-    if sys.stderr is None:
-        sys.stderr = open(os.devnull, 'w', encoding='utf-8')
 
 
 def get_config_path() -> Path:
     """
     Вернуть путь к config.json.
-    - Dev-режим: рядом с корнем проекта
-    - Frozen (.app / .exe): папка пользователя
+    - В dev-режиме (запуск из исходников): рядом с main.py
+    - В собранном .app: ~/Library/Application Support/АнализТК/ (macOS)
+      или ~/.analiz_tk/ (Linux/Windows)
     """
+    import sys, os
+
+    # Если запущен как PyInstaller bundle — sys.frozen = True
     if getattr(sys, 'frozen', False):
         if sys.platform == 'darwin':
             data_dir = Path.home() / 'Library' / 'Application Support' / 'АнализТК'
         elif sys.platform == 'win32':
-            appdata = os.environ.get('APPDATA') or str(Path.home())
-            data_dir = Path(appdata) / 'АнализТК'
+            data_dir = Path(os.environ.get('APPDATA', Path.home())) / 'АнализТК'
         else:
             data_dir = Path.home() / '.analiz_tk'
-
         data_dir.mkdir(parents=True, exist_ok=True)
         config_path = data_dir / 'config.json'
-
-        # При первом запуске — скопировать example как стартовый конфиг
+        # При первом запуске скопировать example если конфига нет
         if not config_path.exists():
-            example = Path(sys._MEIPASS) / 'config.example.json'  # noqa
+            example = Path(sys._MEIPASS) / 'config.example.json'
             if example.exists():
                 import shutil
                 shutil.copy(example, config_path)
-
         return config_path
     else:
+        # dev-режим: ищем config.json рядом с корнем проекта
         return Path(__file__).parent.parent / 'config.json'
 
 from PySide6.QtWidgets import (

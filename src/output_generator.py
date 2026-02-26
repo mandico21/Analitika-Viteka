@@ -35,7 +35,7 @@ class OutputFileGenerator:
         # строка на листе «Наценки» для каждого конкурента: {имя: строка}
         self.markups_row_map: Dict[str, int] = {}
 
-    def generate(self) -> bool:
+    def generate(self, city_competitors: Dict[str, list] = None) -> bool:
         """Полностью сгенерировать выходной файл."""
         try:
             # Создать новую книгу
@@ -50,7 +50,7 @@ class OutputFileGenerator:
             self._create_headers()
 
             # Создать пустые строки для данных
-            self._create_empty_rows()
+            self._create_empty_rows(city_competitors=city_competitors)
 
             # Сохранить файл
             if not self.config.output_file:
@@ -101,7 +101,7 @@ class OutputFileGenerator:
             self._style_header_cell(cell)
 
 
-    def _create_empty_rows(self):
+    def _create_empty_rows(self, city_competitors: Dict[str, list] = None):
         """Создать строки для городов, конкурентов, среднего значения и собственной ТК."""
         enabled_competitors = [
             c for c in self.config.competitors.values()
@@ -119,6 +119,13 @@ class OutputFileGenerator:
         for city_idx, city in enumerate(sorted_cities):
             self.row_map[city] = {}
 
+            # Конкуренты для этого города: если передана карта — берём из неё,
+            # иначе все включённые (обратная совместимость)
+            if city_competitors is not None:
+                competitors_for_city = city_competitors.get(city, [])
+            else:
+                competitors_for_city = enabled_competitors
+
             # --- Строка заголовков колонок для каждого города ---
             self._write_column_headers(current_row)
             current_row += 1
@@ -131,9 +138,9 @@ class OutputFileGenerator:
                 self._style_city_cell(self.ws.cell(row=current_row, column=col_idx))
             current_row += 1
 
-            # --- Строки конкурентов (+ строки наценок после каждого) ---
+            # --- Строки конкурентов (только те, у которых есть данные для города) ---
             first_competitor_row = current_row
-            for competitor in enabled_competitors:
+            for competitor in competitors_for_city:
                 self.row_map[city][competitor.name] = current_row
                 name_cell = self.ws.cell(row=current_row, column=1)
                 name_cell.value = competitor.name
@@ -142,7 +149,7 @@ class OutputFileGenerator:
                     self._style_data_cell(self.ws.cell(row=current_row, column=col_idx), bold=competitor.bold)
                 current_row += 1
 
-                # Строки наценок этого конкурента (перед Средним значением)
+                # Строки наценок этого конкурента
                 for mk_row in competitor.markup_rows:
                     mk_key = f"{competitor.name}|{mk_row.name}"
                     self.row_map[city][mk_key] = current_row
@@ -155,7 +162,7 @@ class OutputFileGenerator:
 
             last_competitor_row = current_row - 1
 
-            # --- Строка «Среднее значение» — диапазонная формула AVERAGE ---
+            # --- Строка «Среднее значение» ---
             if self.config.output_config.include_average:
                 avg_row = current_row
                 self.row_map[city]["__average__"] = avg_row
@@ -167,7 +174,7 @@ class OutputFileGenerator:
                     col_idx = 2 + fi
                     col_letter = get_column_letter(col_idx)
                     cell = self.ws.cell(row=avg_row, column=col_idx)
-                    if enabled_competitors:
+                    if competitors_for_city:
                         cell.value = (
                             f"=AVERAGE({col_letter}{first_competitor_row}"
                             f":{col_letter}{last_competitor_row})"
@@ -176,7 +183,7 @@ class OutputFileGenerator:
 
                 current_row += 1
 
-                # --- Строка собственной ТК — ВСЕГДА ПУСТАЯ ---
+                # --- Строка собственной ТК ---
                 if own.enabled:
                     self.row_map[city]["__own__"] = current_row
                     own_name_cell = self.ws.cell(row=current_row, column=1)
@@ -186,7 +193,7 @@ class OutputFileGenerator:
                         self._style_own_cell(self.ws.cell(row=current_row, column=col_idx))
                     current_row += 1
 
-            # --- Пустая строка-разделитель между городами (не после последнего) ---
+            # --- Пустая строка-разделитель между городами ---
             if city_idx < len(sorted_cities) - 1:
                 current_row += 1
 
