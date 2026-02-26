@@ -100,7 +100,7 @@ class OutputFileGenerator:
         out_cfg = self.config.output_config
 
         # Высота строки заголовка
-        self.ws.row_dimensions[row].height = 26
+        self.ws.row_dimensions[row].height = 33
 
         # Первая колонка — название таблицы
         cell = self.ws.cell(row=row, column=1)
