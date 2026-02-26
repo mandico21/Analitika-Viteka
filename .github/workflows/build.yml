@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:  # Запуск вручную из GitHub UI
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install openpyxl PySide6 thefuzz python-Levenshtein pyinstaller
+
+      - name: Build EXE
+        run: |
+          pyinstaller analiz_tk_win.spec --clean --noconfirm
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: АнализТК-Windows
+          path: dist/АнализТК.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install openpyxl PySide6 thefuzz python-Levenshtein pyinstaller
+
+      - name: Build APP
+        run: |
+          pyinstaller analiz_tk.spec --clean --noconfirm
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: АнализТК-macOS
+          path: dist/АнализТК.app
+

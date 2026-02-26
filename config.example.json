@@ -1,0 +1,71 @@
+{
+  "output_file": "/Users/mandico/Programming/Python/Scripts/analiz_tk/result.xlsx",
+  "competitors": {
+    "GTD": {
+      "name": "GTD",
+      "file_path": "/Users/mandico/Programming/Python/Scripts/analiz_tk/analiz_tk__old/excel/gtd.xlsx",
+      "enabled": true,
+      "source_columns": {
+        "city": "A",
+        "convert": "D",
+        "minimum_1": "E",
+        "minimum_2": "F",
+        "volume": "O",
+        "weight_100": "P",
+        "weight_3000": "Q"
+      },
+      "row_offsets": {
+        "row_app": 0,
+        "row_1": 0,
+        "row_2": 0,
+        "row_3": 0,
+        "row_4": 0,
+        "row_5": 0,
+        "row_6": 0,
+        "row_7": 0
+      },
+      "markups": {
+        "convert": 0.0,
+        "minimum_1": 0.0,
+        "minimum_2": 0.0,
+        "volume": 0.0,
+        "weight_100": 0.0,
+        "weight_3000": 0.0
+      },
+      "fuzzy_match_threshold": 95,
+      "special_conditions": {}
+    }
+  },
+  "cities": {
+    "Москва": 1,
+    "Санкт-Петербург": 2,
+    "Екатеринбург": 3,
+    "Новосибирск": 4,
+    "Казань": 5,
+    "Челябинск": 6,
+    "Омск": 7,
+    "Самара": 8,
+    "Ростов-на-Дону": 9,
+    "Уфа": 10,
+    "Нижний Новгород": 11,
+    "Пермь": 12,
+    "Краснодар": 13,
+    "Воронеж": 14,
+    "Тольятти": 15,
+    "Кемерово": 16,
+    "Волгоград": 17,
+    "Иркутск": 18,
+    "Тюмень": 19,
+    "Томск": 20
+  },
+  "output_config": {
+    "title": "Стоимость доставки",
+    "subtitle": "из Новосибирска",
+    "start_row": 3,
+    "city_column": "A",
+    "include_average": true,
+    "average_row_offset": 1,
+    "markups_sheet": true
+  }
+}
+
