@@ -80,14 +80,22 @@ class OutputFileGenerator:
         total_cols = 1 + len(self.FIELDS)
         self.ws.merge_cells(f"A1:{get_column_letter(total_cols)}1")
 
-        # Ширина колонок (задаётся один раз)
+        # Ширина первой колонки (название конкурента) — фиксированная
         self.ws.column_dimensions[get_column_letter(1)].width = 22
-        for col_idx in range(2, 2 + len(self.FIELDS)):
-            self.ws.column_dimensions[get_column_letter(col_idx)].width = 18
+
+        # Ширина колонок полей — по длине текста заголовка + небольшой отступ
+        for col_idx, field in enumerate(self.FIELDS, start=2):
+            header_text = self.FIELD_NAMES[field]
+            # Кириллица визуально шире латиницы, поэтому множитель ~0.9 от полной длины
+            text_width = round(len(header_text) * 0.9) + 2
+            self.ws.column_dimensions[get_column_letter(col_idx)].width = text_width
 
     def _write_column_headers(self, row: int):
         """Нарисовать строку заголовков колонок на указанной строке."""
         out_cfg = self.config.output_config
+
+        # Высота строки заголовка
+        self.ws.row_dimensions[row].height = 26
 
         # Первая колонка — название таблицы
         cell = self.ws.cell(row=row, column=1)
