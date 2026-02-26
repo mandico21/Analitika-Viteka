@@ -83,12 +83,17 @@ class OutputFileGenerator:
         # Ширина первой колонки (название конкурента) — фиксированная
         self.ws.column_dimensions[get_column_letter(1)].width = 22
 
-        # Ширина колонок полей — по длине текста заголовка + небольшой отступ
+        # Фиксированные ширины для каждой колонки полей
+        field_widths = {
+            'convert':    9,
+            'minimum_1':  10,
+            'minimum_2':  10,
+            'volume':     10,
+            'weight_100': 10,
+            'weight_3000': 10,
+        }
         for col_idx, field in enumerate(self.FIELDS, start=2):
-            header_text = self.FIELD_NAMES[field]
-            # Кириллица визуально шире латиницы, поэтому множитель ~0.9 от полной длины
-            text_width = round(len(header_text) * 0.9) + 2
-            self.ws.column_dimensions[get_column_letter(col_idx)].width = text_width
+            self.ws.column_dimensions[get_column_letter(col_idx)].width = field_widths[field]
 
     def _write_column_headers(self, row: int):
         """Нарисовать строку заголовков колонок на указанной строке."""
